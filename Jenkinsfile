@@ -1,16 +1,23 @@
 pipeline{
     agent any
+    environment{
+        SONAR_HOME=tool "Sonar"
     } 
-    stages{
+        stage("Test"){
+            steps{
+                echo "this is a test"
+            }
+        }
         stage("OWASP Dependency Check"){
             steps{
                 dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP-DC'
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
-        stage("Done"){
+
+        stage("Test 2"){
             steps{
-                echo "done"
+                echo "this is a test 2"
             }
         }
 }
