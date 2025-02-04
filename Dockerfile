@@ -1,13 +1,7 @@
-FROM node:18-alpine
+FROM nginx:latest
 
-WORKDIR /app
+COPY index.html /usr/share/nginx/html/index.html
 
-COPY package*.json ./
+EXPOSE 80
 
-RUN npm install
-
-COPY . .
-
-EXPOSE 7001
-
-CMD ["node", "app.js"]
+CMD ["nginx", "-g", "daemon off;"]
