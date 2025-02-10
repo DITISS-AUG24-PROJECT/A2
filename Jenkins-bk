@@ -115,7 +115,7 @@ pipeline {
             steps {
                 sh '''
                 docker run --memory=4g --rm zaproxy/zap-stable zap-baseline.py \
-                -t ${TARGET_URL} --fail-on WARN-INPROG,INFO || true
+                -t ${TARGET_URL} --timeout 600 --fail-on WARN-INPROG,INFO || true
                 '''
             }
             post {
@@ -136,7 +136,7 @@ pipeline {
             steps {
                 sh '''
                 docker run --memory=4g --rm zaproxy/zap-stable zap-full-scan.py \
-                -t ${TARGET_URL} --fail-on WARN-INPROG,INFO || true
+                -t ${TARGET_URL} --timeout 1200 --fail-on WARN-INPROG,INFO || true
                 '''
             }
             post {
@@ -153,6 +153,11 @@ pipeline {
             }
         }
 
+        stage("Cleanup") {
+            steps {
+                sh 'docker compose down'
+            }
+        }
     }
 
     post {
