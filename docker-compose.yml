@@ -4,5 +4,3 @@ services:
     ports:
       - "9080:9080"
     container_name: vulnerable-app
-    deploy:
-      replicas: 5
